@@ -5,4 +5,3 @@ def start():
             print(data,end="")
             data = file.readline()
 start()
-
