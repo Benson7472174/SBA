@@ -1,4 +1,7 @@
 #start this function is showing User what you want ? log in or create account
+import hashlib
+
+
 def start():
     with open('start.txt','r') as file2:
         lines = file2.readlines()
@@ -56,6 +59,29 @@ def menu():
             o = int(input("Please Enter Correct Option Number: "))
         return o
 
+#This function is for create account.
+def createaccount():
+    created=False
+    while created is False:
+        acid = input("Enter Account Number: ")
+        acpw = hashlib.sha512(input("Enter Password: ").encode(encoding="utf-8")).hexdigest()
+        confirm = hashlib.sha512(input("Confirm Password: ").encode(encoding="utf-8")).hexdigest()
+        while confirm != acpw:
+            print("Repeated Account Id or Wrong Password")
+            acid=input("Enter Account Number: ")
+            acpw=hashlib.sha512(input("Enter Account Password: ").encode(encoding="utf-8")).hexdigest()
+            confirm=hashlib.sha512(input("Confirm Password: ").encode(encoding="utf-8")).hexdigest()
+            with open('veracity.txt','r') as find:
+                sameid=find.readline()
+                while sameid is not None:
+                    if sameid == acid:
+                        print("Account already exists")
+                        break
+                    sameid=find.readline()
+                created=True
+    with open('veracity.txt','a+') as addaccount:
+        addaccount.write(f"{acid} {acpw}\n")
+        return
 
 #This part is the booking system how to run
 systeminform="running"
@@ -74,9 +100,8 @@ while systeminform !="exit":
                 useroption=menu()
     elif userstartingoption == 2:
         createaccount()
+        print("Account Created")
     elif userstartingoption ==3:
         break
-
-
 
 
